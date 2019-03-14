@@ -6,8 +6,9 @@ interface GridProps {
 export const Grid = styled.div<GridProps>`
   background-color: green;
   display: grid;
-  ${p => css`grid-template-columns: repeat({p.dimensions}, 1fr)`}
-  grid-auto-rows: min-content;
+  ${p => css`grid-template-columns: repeat(${p.dimensions}, 2em);`}
+  ${p => css`grid-template-rows: repeat(${p.dimensions}, 2em);`}
+  width: min-content;
 `;
 
 interface CellProps {
@@ -15,4 +16,7 @@ interface CellProps {
 }
 export const Cell = styled.div<CellProps>`
   ${p => p.isWall ? css`background-color: orange;` : ""}
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
