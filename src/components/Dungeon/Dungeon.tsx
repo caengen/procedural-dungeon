@@ -16,6 +16,7 @@ export default class Dungeon extends React.Component<DungeonProps> {
   }
 
   private renderCellRow = (row: number[]) => row.map(this.renderCell);
+  
   private renderCell = (cell: number, row: number) => (
     <Cell key={`${row}${cell}`} isWall={!!cell}>
       <code>{cell}</code>

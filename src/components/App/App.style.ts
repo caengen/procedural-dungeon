@@ -1,7 +1,8 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 export const StyledApp = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
 `;
 
 export const GlobalStyle = createGlobalStyle`

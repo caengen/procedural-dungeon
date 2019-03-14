@@ -15,8 +15,12 @@ interface CellProps {
   isWall?: boolean;
 }
 export const Cell = styled.div<CellProps>`
-  ${p => p.isWall ? css`background-color: orange;` : ""}
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  ${p => p.isWall ? css`
+    background-color: orange;
+    color: #222;
+  ` : ""}
 `;
