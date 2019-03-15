@@ -9,7 +9,7 @@ export interface RandomWalkParams {
 }
 export default function randomWalk(params: RandomWalkParams) {
   const { dimensions, tunnels, tunnelLength } = params;
-  const matrix = createMatrix(dimensions, dimensions);
+  const map = createMatrix(dimensions, dimensions);
 
   let lastDirection = undefined;
   
@@ -21,10 +21,10 @@ export default function randomWalk(params: RandomWalkParams) {
     const direction = nextDirection({ lastDirection });
 
     for (let j = 0; j < tunnelLength; j++) {
-      matrix[currRow][currCol] = 0;
-      const { nextRow, nextCol, outOfBounds } = nextPosition({ currRow, currCol, direction, maxDimension: dimensions });
+      map[currRow][currCol] = 0;
+      const { nextRow, nextCol, collision } = nextPosition({ currRow, currCol, direction, map, maxDimension: dimensions });
       
-      if (outOfBounds) {
+      if (collision) {
         break;
       } else {
         currRow = nextRow;
@@ -35,7 +35,7 @@ export default function randomWalk(params: RandomWalkParams) {
     lastDirection = direction;
   }
   
-  return matrix;
+  return map;
 }
 
 interface NextDirectionParams {
@@ -66,10 +66,11 @@ interface NextPositionParams {
   currRow: number;
   currCol: number;
   direction: number[];
+  map: number[][];
   maxDimension: number;
 }
 function nextPosition(params: NextPositionParams) {
-  const { currRow, currCol, direction, maxDimension } = params;
+  const { currRow, currCol, map, direction, maxDimension } = params;
   const [ rowModifier, colModifier ] = direction;
   
   const nextRow = currRow + rowModifier;
@@ -79,10 +80,12 @@ function nextPosition(params: NextPositionParams) {
     nextRow < 0 || nextRow >= maxDimension ||
     nextCol < 0 || nextCol >= maxDimension
   );
+
+  let alreadyTraversed = outOfBounds ? false : map[nextRow][nextCol] === 0;
   
   return {
     nextRow,
     nextCol,
-    outOfBounds
+    collision: outOfBounds || alreadyTraversed
   };
 }
