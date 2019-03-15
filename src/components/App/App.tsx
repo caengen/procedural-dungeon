@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dungeon } from "src/components";
 import { StyledApp, GlobalStyle } from './App.style';
+import { randomWalk } from 'src/generation';
 
 class App extends Component {
   render() {
@@ -16,7 +17,11 @@ class App extends Component {
     return (
       <StyledApp>
         <GlobalStyle />
-        <Dungeon cells={testCells} />
+        <Dungeon matrix={randomWalk({
+          dimensions: 20,
+          tunnelLength: 9,
+          tunnels: 50
+        })} />
       </StyledApp>
     );
   }
