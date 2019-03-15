@@ -1,5 +1,6 @@
 import { createMatrix } from "../createMatrix";
 import { Directions } from "src/types";
+import { without } from "lodash";
 
 export interface RandomWalkParams {
   dimensions: number;
@@ -17,10 +18,9 @@ export default function randomWalk(params: RandomWalkParams) {
   let currCol = Math.floor(Math.random() * dimensions);
 
   for (let i = tunnels; i > 0; i--) {
-    const direction = nextDirection(lastDirection);
+    const direction = nextDirection({ lastDirection });
 
     for (let j = 0; j < tunnelLength; j++) {
-      console.log(`matrix[${currRow}][${currCol}] = 0;`);
       matrix[currRow][currCol] = 0;
       const { nextRow, nextCol, outOfBounds } = nextPosition({ currRow, currCol, direction, maxDimension: dimensions });
       
@@ -38,17 +38,28 @@ export default function randomWalk(params: RandomWalkParams) {
   return matrix;
 }
 
-/**
- * TODO: Må og ta hensyn til array out of bounds og tidligere traverserte på direction
- * @param lastDirection 
- */
-function nextDirection(lastDirection?: number[]) {
+interface NextDirectionParams {
+  lastDirection?: number[];
+}
+function nextDirection(params: NextDirectionParams) {
+  const { lastDirection } = params;
   let direction = undefined;
-  do {
-    direction = Directions[Math.floor(Math.random() * Directions.length)];
-  } while (direction === lastDirection);
+  const validDirections = excludeSameAndOppositeDirections(lastDirection);
+
+  direction = validDirections[Math.floor(Math.random() * validDirections.length)];
 
   return direction;
+}
+
+function excludeSameAndOppositeDirections(direction?: number[]) {
+  if (!direction) {
+    return Directions;
+  }
+
+  const opposite = direction.map(d => d < 0 ? Math.abs(d) : -d);
+  const excluded = without(Directions, direction, opposite);
+
+  return excluded;
 }
 
 interface NextPositionParams {
