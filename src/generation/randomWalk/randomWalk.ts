@@ -1,6 +1,4 @@
-import { createMatrix } from "../createMatrix";
-import { Directions } from "src/types";
-import { without } from "lodash";
+import { createMatrix, excludeSameAndOppositeDirections } from "src/generation";
 
 export interface RandomWalkParams {
   dimensions: number;
@@ -49,17 +47,6 @@ function nextDirection(params: NextDirectionParams) {
   direction = validDirections[Math.floor(Math.random() * validDirections.length)];
 
   return direction;
-}
-
-function excludeSameAndOppositeDirections(direction?: number[]) {
-  if (!direction) {
-    return Directions;
-  }
-
-  const opposite = direction.map(d => d < 0 ? Math.abs(d) : -d);
-  const excluded = without(Directions, direction, opposite);
-
-  return excluded;
 }
 
 interface NextPositionParams {
