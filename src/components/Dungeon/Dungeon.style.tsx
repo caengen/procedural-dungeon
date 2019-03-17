@@ -4,7 +4,7 @@ interface GridProps {
   dimensions: number;
 }
 export const Grid = styled.div<GridProps>`
-  background-color: green;
+  background-color: #6F7B7E;
   display: grid;
   ${p => css`grid-template-columns: repeat(${p.dimensions}, 2em);`}
   ${p => css`grid-template-rows: repeat(${p.dimensions}, 2em);`}
@@ -15,12 +15,12 @@ interface CellProps {
   isWall?: boolean;
 }
 export const Cell = styled.div<CellProps>`
-  color: white;
+  color: #1C2224;
   display: flex;
   justify-content: center;
   align-items: center;
   ${p => p.isWall ? css`
-    background-color: orange;
-    color: #222;
+    background-color: #1C2224;
+    color: #3A4548;
   ` : ""}
 `;
