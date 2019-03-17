@@ -1,4 +1,7 @@
-import { createMap, excludeSameAndOppositeDirections } from "src/generation";
+import { createMap } from "src/generation";
+import {isOutOfBounds} from "src/helpers";
+import { excludeSameAndOppositeDirections } from "./excludeSameAndOppositeDirections";
+import { MapType } from "src/types";
 
 export interface RandomWalkParams {
   dimensions: number;
@@ -11,7 +14,7 @@ export default function randomWalk(params: RandomWalkParams) {
 
   let lastDirection = undefined;
   let tunnelsLeft = tunnels;
-  // Initialise random position
+  // Initialise with random position
   let currRow = Math.floor(Math.random() * dimensions);
   let currCol = Math.floor(Math.random() * dimensions);
 
@@ -21,10 +24,10 @@ export default function randomWalk(params: RandomWalkParams) {
     let tunneled = 0;
     let tunnelLength = Math.ceil(Math.random() * maxTunnelLength);
     while (tunneled < tunnelLength) {
-      map[currRow][currCol] = 0;
+      map[currRow][currCol] = MapType.floor;
       tunneled++;
 
-      const { nextRow, nextCol, collision } = nextPosition({ currRow, currCol, direction, map, maxDimension: dimensions });
+      const { nextRow, nextCol, collision } = nextPosition({ currRow, currCol, direction, maxDimension: dimensions });
       
       if (collision) {
         break;
@@ -58,11 +61,10 @@ interface NextPositionParams {
   currRow: number;
   currCol: number;
   direction: number[];
-  map: number[][];
   maxDimension: number;
 }
 function nextPosition(params: NextPositionParams) {
-  const { currRow, currCol, map, direction, maxDimension } = params;
+  const { currRow, currCol, direction, maxDimension } = params;
   const [ rowModifier, colModifier ] = direction;
   
   const nextRow = currRow + rowModifier;
@@ -75,11 +77,4 @@ function nextPosition(params: NextPositionParams) {
     nextCol,
     collision: outOfBounds
   };
-}
-
-function isOutOfBounds(row: number, col: number, maxDimension: number) {
-  return (
-    row < 0 || row >= maxDimension ||
-    col < 0 || col >= maxDimension
-  );
 }
