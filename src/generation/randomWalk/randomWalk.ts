@@ -1,25 +1,30 @@
-import { createMatrix, excludeSameAndOppositeDirections } from "src/generation";
+import { createMap, excludeSameAndOppositeDirections } from "src/generation";
+import { Direction, MapType, Directions } from "src/types";
 
 export interface RandomWalkParams {
   dimensions: number;
   tunnels: number;
-  tunnelLength: number;
+  maxTunnelLength: number;
 }
 export default function randomWalk(params: RandomWalkParams) {
-  const { dimensions, tunnels, tunnelLength } = params;
-  const map = createMatrix(dimensions, dimensions);
+  const { dimensions, tunnels, maxTunnelLength } = params;
+  const map = createMap(dimensions, dimensions);
 
   let lastDirection = undefined;
-  
+  let tunnelsLeft = tunnels;
   // Initialise random position
   let currRow = Math.floor(Math.random() * dimensions);
   let currCol = Math.floor(Math.random() * dimensions);
 
-  for (let i = tunnels; i > 0; i--) {
-    const direction = nextDirection({ lastDirection });
+  while (tunnelsLeft > 0) {
+    let direction = nextDirection({ lastDirection });
 
-    for (let j = 0; j < tunnelLength; j++) {
+    let tunneled = 0;
+    let tunnelLength = Math.ceil(Math.random() * maxTunnelLength);
+    while (tunneled < tunnelLength) {
       map[currRow][currCol] = 0;
+      tunneled++;
+
       const { nextRow, nextCol, collision } = nextPosition({ currRow, currCol, direction, map, maxDimension: dimensions });
       
       if (collision) {
@@ -31,9 +36,29 @@ export default function randomWalk(params: RandomWalkParams) {
     }
 
     lastDirection = direction;
+    tunnelsLeft--;
   }
   
   return map;
+}
+
+function getWallDirections(currRow: number, currCol: number, map: number[][]) {
+  let directions = [];
+
+  for (let i = 0; i < Directions.length; i++) {
+    const row = currRow + Directions[i][0];
+    const col = currCol + Directions[i][1];
+
+    if (isOutOfBounds(row, col, map[0].length)) {
+      continue;
+    }
+
+    if (map[row][col] === MapType.wall) {
+      directions.push(Directions[i]);
+    }
+  }
+
+  return directions;
 }
 
 interface NextDirectionParams {
@@ -63,16 +88,18 @@ function nextPosition(params: NextPositionParams) {
   const nextRow = currRow + rowModifier;
   const nextCol = currCol + colModifier;
   
-  let outOfBounds = (
-    nextRow < 0 || nextRow >= maxDimension ||
-    nextCol < 0 || nextCol >= maxDimension
-  );
-
-  let alreadyTraversed = outOfBounds ? false : map[nextRow][nextCol] === 0;
+  let outOfBounds = isOutOfBounds(nextRow, nextCol, maxDimension);
   
   return {
     nextRow,
     nextCol,
-    collision: outOfBounds || alreadyTraversed
+    collision: outOfBounds
   };
+}
+
+function isOutOfBounds(row: number, col: number, maxDimension: number) {
+  return (
+    row < 0 || row >= maxDimension ||
+    col < 0 || col >= maxDimension
+  );
 }

@@ -1,4 +1,4 @@
-export default function createMatrix(rows: number, columns: number) {
+export default function createMap(rows: number, columns: number) {
   let matrix = [];
   for (let i = 0; i < rows; i++) {
     let row = [];

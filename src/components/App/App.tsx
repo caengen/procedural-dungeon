@@ -10,7 +10,7 @@ class App extends Component {
         <GlobalStyle />
         <Dungeon matrix={randomWalk({
           dimensions: 20,
-          tunnelLength: 6,
+          maxTunnelLength: 6,
           tunnels: 50
         })} />
       </StyledApp>
