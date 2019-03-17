@@ -1,5 +1,4 @@
 import { createMap, excludeSameAndOppositeDirections } from "src/generation";
-import { Direction, MapType, Directions } from "src/types";
 
 export interface RandomWalkParams {
   dimensions: number;
@@ -40,25 +39,6 @@ export default function randomWalk(params: RandomWalkParams) {
   }
   
   return map;
-}
-
-function getWallDirections(currRow: number, currCol: number, map: number[][]) {
-  let directions = [];
-
-  for (let i = 0; i < Directions.length; i++) {
-    const row = currRow + Directions[i][0];
-    const col = currCol + Directions[i][1];
-
-    if (isOutOfBounds(row, col, map[0].length)) {
-      continue;
-    }
-
-    if (map[row][col] === MapType.wall) {
-      directions.push(Directions[i]);
-    }
-  }
-
-  return directions;
 }
 
 interface NextDirectionParams {
