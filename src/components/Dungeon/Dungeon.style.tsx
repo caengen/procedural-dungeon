@@ -1,10 +1,11 @@
 import styled, { css } from "styled-components";
+import { Colors } from "src/types";
 
 interface GridProps {
   dimensions: number;
 }
 export const Grid = styled.div<GridProps>`
-  background-color: #6f7b7e;
+  background-color: ${Colors.Stone.Lightest};
   display: grid;
   ${p =>
     css`
@@ -21,15 +22,15 @@ interface CellProps {
   isWall?: boolean;
 }
 export const Cell = styled.div<CellProps>`
-  color: #1c2224;
+  color: ${Colors.Stone.Dark};
   display: flex;
   justify-content: center;
   align-items: center;
   ${p =>
     p.isWall
       ? css`
-          background-color: #1c2224;
-          color: #3a4548;
+          background-color: ${Colors.Stone.Dark};
+          color: ${Colors.Stone.Base};
         `
       : ""}
 `;

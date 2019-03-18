@@ -9,7 +9,7 @@ interface State extends RandomWalkParams {}
 
 export default function RandomWalk() {
   const [state, updateState] = useState<State>({
-    dimensions: 20,
+    dimensions: 15,
     tunnels: 50,
     maxTunnelLength: 6
   });
