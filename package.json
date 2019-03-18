@@ -1,6 +1,6 @@
 {
-  "name": "procedural-dungeons",
-  "homepage" : "http://caengen.github.io/procedural-dungeons",
+  "name": "procedural-dungeon",
+  "homepage" : "http://caengen.github.io/procedural-dungeon",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
