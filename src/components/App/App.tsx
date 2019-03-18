@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { RandomWalk } from "src/components";
-import { StyledApp, GlobalStyle } from './App.style';
+import { StyledApp, GlobalStyle } from "./App.style";
 
 class App extends Component {
   render() {

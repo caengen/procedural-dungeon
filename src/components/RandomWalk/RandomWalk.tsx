@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import {RandomWalkInputs} from './RandomWalkInputs';
-import { RandomWalkParams } from 'src/types';
-import { Dungeon } from 'src/components';
-import { randomWalk } from 'src/generation';
-import { StyledRandomWalk } from './RandomWalk.styles';
+import React, { useState } from "react";
+import { RandomWalkInputs } from "./RandomWalkInputs";
+import { RandomWalkParams } from "src/types";
+import { Dungeon } from "src/components";
+import { randomWalk } from "src/generation";
+import { StyledRandomWalk } from "./RandomWalk.styles";
 
-interface State extends RandomWalkParams{
-}
+interface State extends RandomWalkParams {}
 
 export default function RandomWalk() {
   const [state, updateState] = useState<State>({

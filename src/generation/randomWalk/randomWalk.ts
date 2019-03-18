@@ -1,5 +1,5 @@
 import { createMap } from "src/generation";
-import {isOutOfBounds} from "src/helpers";
+import { isOutOfBounds } from "src/helpers";
 import { excludeSameAndOppositeDirections } from "./excludeSameAndOppositeDirections";
 import { MapType } from "src/types";
 
@@ -14,6 +14,7 @@ export default function randomWalk(params: RandomWalkParams) {
 
   let lastDirection = undefined;
   let tunnelsLeft = tunnels;
+
   // Initialise with random position
   let currRow = Math.floor(Math.random() * dimensions);
   let currCol = Math.floor(Math.random() * dimensions);
@@ -27,8 +28,13 @@ export default function randomWalk(params: RandomWalkParams) {
       map[currRow][currCol] = MapType.floor;
       tunneled++;
 
-      const { nextRow, nextCol, collision } = nextPosition({ currRow, currCol, direction, maxDimension: dimensions });
-      
+      const { nextRow, nextCol, collision } = nextPosition({
+        currRow,
+        currCol,
+        direction,
+        maxDimension: dimensions
+      });
+
       if (collision) {
         break;
       } else {
@@ -40,7 +46,7 @@ export default function randomWalk(params: RandomWalkParams) {
     lastDirection = direction;
     tunnelsLeft--;
   }
-  
+
   return map;
 }
 
@@ -52,7 +58,8 @@ function nextDirection(params: NextDirectionParams) {
   let direction = undefined;
   const validDirections = excludeSameAndOppositeDirections(lastDirection);
 
-  direction = validDirections[Math.floor(Math.random() * validDirections.length)];
+  direction =
+    validDirections[Math.floor(Math.random() * validDirections.length)];
 
   return direction;
 }
@@ -65,13 +72,13 @@ interface NextPositionParams {
 }
 function nextPosition(params: NextPositionParams) {
   const { currRow, currCol, direction, maxDimension } = params;
-  const [ rowModifier, colModifier ] = direction;
-  
+  const [rowModifier, colModifier] = direction;
+
   const nextRow = currRow + rowModifier;
   const nextCol = currCol + colModifier;
-  
+
   let outOfBounds = isOutOfBounds(nextRow, nextCol, maxDimension);
-  
+
   return {
     nextRow,
     nextCol,

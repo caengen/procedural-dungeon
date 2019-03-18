@@ -8,7 +8,10 @@ export default function excludeSameAndOppositeDirections(direction?: number[]) {
   }
 
   const opposite = direction.map(flipPlusMinus);
-  const excluded = filter(Directions, d => !(isEqual(d, direction) || isEqual(d, opposite)));
+  const excluded = filter(
+    Directions,
+    d => !(isEqual(d, direction) || isEqual(d, opposite))
+  );
 
   return excluded;
 }
