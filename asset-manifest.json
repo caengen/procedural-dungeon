@@ -1,11 +1,11 @@
 {
-  "main.js": "/static/js/main.07b04c64.chunk.js",
-  "main.js.map": "/static/js/main.07b04c64.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-  "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-  "static/js/2.44055920.chunk.js": "/static/js/2.44055920.chunk.js",
-  "static/js/2.44055920.chunk.js.map": "/static/js/2.44055920.chunk.js.map",
-  "index.html": "/index.html",
-  "precache-manifest.7fdbc6c9c5fa4399362426294e3c049e.js": "/precache-manifest.7fdbc6c9c5fa4399362426294e3c049e.js",
-  "service-worker.js": "/service-worker.js"
+  "main.js": "/procedural-dungeon/static/js/main.2245693e.chunk.js",
+  "main.js.map": "/procedural-dungeon/static/js/main.2245693e.chunk.js.map",
+  "runtime~main.js": "/procedural-dungeon/static/js/runtime~main.5f40d593.js",
+  "runtime~main.js.map": "/procedural-dungeon/static/js/runtime~main.5f40d593.js.map",
+  "static/js/2.ad8d4a5c.chunk.js": "/procedural-dungeon/static/js/2.ad8d4a5c.chunk.js",
+  "static/js/2.ad8d4a5c.chunk.js.map": "/procedural-dungeon/static/js/2.ad8d4a5c.chunk.js.map",
+  "index.html": "/procedural-dungeon/index.html",
+  "precache-manifest.ccc0a450b1add85f26514afdc4359310.js": "/procedural-dungeon/precache-manifest.ccc0a450b1add85f26514afdc4359310.js",
+  "service-worker.js": "/procedural-dungeon/service-worker.js"
 }
