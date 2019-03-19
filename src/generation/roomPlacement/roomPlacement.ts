@@ -27,11 +27,14 @@ function createRooms(params: CreateRoomsParams) {
 
   let generatedRooms: Room[] = [];
   for (let i = 0; i < rooms; i++) {
+    const height = Math.ceil(Math.random() * roomHeight);
+    const width = Math.ceil(Math.random() * roomWidth);
+
     generatedRooms.push({
       id: uuidv4(),
-      height: roomHeight,
-      width: roomWidth,
-      map: createMap(roomHeight, roomWidth)
+      height,
+      width,
+      map: createMap(height, width)
     });
   }
 
