@@ -1,4 +1,4 @@
-import { Room } from "src/types";
+import { Room, MapType } from "src/types";
 import uuidv4 from "uuid/v4";
 import { createMap } from "src/generation";
 
@@ -13,14 +13,14 @@ export default function roomPlacement(params: RoomPlacementParams) {
   const { dimensions, rooms, roomWidth, roomHeight } = params;
 
   const map = createMap(dimensions, dimensions);
-  const { carvedMap, roomCenters } = placeRooms({
+  const { carvedMap } = placeRooms({
     map,
     rooms,
     roomHeight,
     roomWidth
   });
 
-  return [[]];
+  return carvedMap;
 }
 
 interface CreateRoomsParams {
@@ -53,30 +53,41 @@ interface PlaceRoomParams {
 function placeRooms(params: PlaceRoomParams) {
   const { map, rooms, roomWidth, roomHeight } = params;
   let carvedMap = map;
-  let roomCenters = [];
 
   for (let i = 0; i < rooms; i++) {
     let placed = false;
-    let attempts = 0;
-    while (!placed && attempts < 5) {
+    while (!placed) {
       const room = createRoom({
         roomHeight,
         roomWidth,
         dimensions: map.length
       });
-      const intersects = intersection(carvedMap, room);
+
+      /*
+      const intersects = intersects(carvedMap, room);
       if (!intersects) {
         carvedMap = placeRoom(carvedMap, rooms[i]);
         placed = true;
       }
-      attempts++;
+      */
+
+      carvedMap = placeRoom(carvedMap, room);
+      placed = true;
     }
   }
 
-  return { carvedMap, roomCenters };
+  return { carvedMap };
 }
 
-function intersection() {}
+function placeRoom(map: number[][], room: Room) {
+  for (let x = room.x; x < room.x + room.width; x++) {
+    for (let y = room.y; y < room.y + room.height; y++) {
+      map[x][y] = MapType.floor;
+    }
+  }
+
+  return map;
+}
 
 function getRandomCoordinates(
   dimensions: number,
