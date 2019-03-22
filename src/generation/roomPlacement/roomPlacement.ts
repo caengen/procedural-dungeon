@@ -1,6 +1,7 @@
 import { Room, MapType } from "src/types";
 import uuidv4 from "uuid/v4";
 import { createMap } from "src/generation";
+import PF from "pathfinding";
 
 interface RoomPlacementParams {
   dimensions: number;
@@ -53,7 +54,7 @@ interface PlaceRoomParams {
 function placeRooms(params: PlaceRoomParams) {
   const { map, rooms, roomWidth, roomHeight } = params;
   let carvedMap = map;
-
+  let centers = [];
   for (let i = 0; i < rooms; i++) {
     let placed = false;
     while (!placed) {
@@ -61,6 +62,10 @@ function placeRooms(params: PlaceRoomParams) {
         roomHeight,
         roomWidth,
         dimensions: map.length
+      });
+      centers.push({
+        x: Math.floor(room.x + room.width / 2),
+        y: Math.floor(room.y + room.height / 2)
       });
 
       /*
@@ -76,6 +81,8 @@ function placeRooms(params: PlaceRoomParams) {
     }
   }
 
+  carvedMap = placeCorridors({ map: carvedMap, centers });
+
   return { carvedMap };
 }
 
@@ -83,6 +90,58 @@ function placeRoom(map: number[][], room: Room) {
   for (let x = room.x; x < room.x + room.width; x++) {
     for (let y = room.y; y < room.y + room.height; y++) {
       map[x][y] = MapType.floor;
+    }
+  }
+
+  return map;
+}
+
+interface PlaceCorridorsParams {
+  map: number[][];
+  centers: {
+    x: number;
+    y: number;
+  }[];
+}
+function placeCorridors(params: PlaceCorridorsParams) {
+  const { map, centers } = params;
+
+  const searchGrid = new PF.Grid(map.length, map[0].length);
+  const finder = new PF.AStarFinder({
+    diagonalMovement: PF.DiagonalMovement.Never
+  });
+  let paths = [];
+
+  let previousCenter = undefined;
+  while (centers.length > 0) {
+    const first = centers.shift();
+    const second = centers.shift();
+    previousCenter = second;
+
+    if (!first && !second) {
+      break;
+    }
+
+    if (first && second) {
+      paths.push(
+        finder.findPath(first.x, first.y, second.x, second.y, searchGrid)
+      );
+    } else if (first && !second && previousCenter) {
+      paths.push(
+        finder.findPath(
+          first.x,
+          first.y,
+          previousCenter.x,
+          previousCenter.y,
+          searchGrid
+        )
+      );
+    }
+  }
+
+  for (let path of paths) {
+    for (let i = 0; i < path.length; i++) {
+      map[path[i][0]][path[i][1]] = MapType.floor;
     }
   }
 
