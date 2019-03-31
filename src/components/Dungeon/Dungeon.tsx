@@ -4,13 +4,17 @@ import { MapType } from "src/types";
 
 export interface DungeonProps {
   matrix: number[][];
+  onClick?: () => void;
+  mini?: boolean;
 }
 
 export default class Dungeon extends React.Component<DungeonProps> {
   public render() {
-    const { matrix } = this.props;
+    const { matrix, onClick, mini } = this.props;
     return (
-      <Grid dimensions={matrix.length}>{matrix.map(this.renderCellRow)}</Grid>
+      <Grid mini={mini} onClick={onClick} dimensions={matrix.length}>
+        {matrix.map(this.renderCellRow)}
+      </Grid>
     );
   }
 

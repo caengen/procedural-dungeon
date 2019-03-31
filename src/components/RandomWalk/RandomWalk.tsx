@@ -17,9 +17,10 @@ export default function RandomWalk() {
   const handleClick = () => updateMap(randomWalk(state));
 
   return (
-    <StyledRandomWalk onClick={handleClick}>
+    <section>
+      <h1>Random walk</h1>
       <RandomWalkInputs onChange={updateState} />
-      <Dungeon matrix={map} />
-    </StyledRandomWalk>
+      <Dungeon onClick={handleClick} matrix={map} />
+    </section>
   );
 }
