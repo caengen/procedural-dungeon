@@ -29,7 +29,7 @@ export default function DungeonSelector(props: DungeonSelectorProps) {
     <div>
       <List>
         {options.map(o => (
-          <DungeonSelectorOption option={o} />
+          <DungeonSelectorOption key={o.key} option={o} />
         ))}
       </List>
     </div>

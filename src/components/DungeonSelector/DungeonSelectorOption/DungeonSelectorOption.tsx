@@ -7,7 +7,7 @@ export default function DungeonSelectorOption(props: { option: Option }) {
   const { option } = props;
 
   return (
-    <StyledDungeonSelectorOption key={option.key}>
+    <StyledDungeonSelectorOption>
       <Dungeon mini matrix={option.example} />
       <strong>{option.type}</strong>
     </StyledDungeonSelectorOption>
