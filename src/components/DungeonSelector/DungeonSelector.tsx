@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import uuidv4 from "uuid/v4";
-import { randomWalk } from "src/generation";
 import { List } from "./DungeonSelector.style";
 import { DungeonSelectorOption } from "./DungeonSelectorOption";
 import { DungeonSelection, Option } from "./DungeonSelector.types";
+import walkIcon from "src/assets/walk.svg";
+import randomIcon from "src/assets/random.svg";
 
 export interface DungeonSelectorProps {
   onSelected: (selected: DungeonSelection) => void;
@@ -13,12 +14,12 @@ const options: Option[] = [
   {
     key: uuidv4(),
     type: "RandomWalk",
-    example: randomWalk({ dimensions: 20, maxTunnelLength: 6, tunnels: 50 })
+    icon: walkIcon
   },
   {
     key: uuidv4(),
     type: "RoomPlacement",
-    example: randomWalk({ dimensions: 20, maxTunnelLength: 6, tunnels: 50 })
+    icon: randomIcon
   }
 ];
 

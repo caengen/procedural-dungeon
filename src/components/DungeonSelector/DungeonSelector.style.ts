@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
-  list-style: none;
-  margin: 0;
+export const List = styled.div`
+  margin: 0 0 0 1em;
 `;

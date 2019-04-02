@@ -1,7 +1,7 @@
 export interface Option {
   key: string;
   type: DungeonSelection;
-  example: number[][];
+  icon: string;
 }
 
 export type DungeonSelection = "RandomWalk" | "RoomPlacement";
