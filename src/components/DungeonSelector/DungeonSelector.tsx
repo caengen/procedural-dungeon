@@ -30,7 +30,12 @@ export default function DungeonSelector(props: DungeonSelectorProps) {
     <div>
       <List>
         {options.map(o => (
-          <DungeonSelectorOption key={o.key} option={o} />
+          <DungeonSelectorOption
+            isSelected={selected === o.type}
+            onSelected={updateSelected}
+            key={o.key}
+            option={o}
+          />
         ))}
       </List>
     </div>
