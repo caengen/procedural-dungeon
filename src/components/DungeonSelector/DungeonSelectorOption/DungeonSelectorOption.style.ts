@@ -8,13 +8,13 @@ export const StyledDungeonSelectorOption = styled.div<{ isSelected?: boolean }>`
   display: flex;
   padding: 1em;
   flex-direction: row;
+  border: 1px solid ${Colors.Stone.Base};
+  border-radius: 6px;
   ${p =>
     p.isSelected &&
     css`
-      background-color: blue;
+      border-color: red;
     `}
-  border: 1px solid ${Colors.Stone.Base};
-  border-radius: 6px;
   margin: 0.5em 0;
 
   input {

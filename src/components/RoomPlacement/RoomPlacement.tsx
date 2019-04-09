@@ -1,3 +1,4 @@
+import React from "react";
 import { Dungeon } from "src/components";
 import { roomPlacement } from "src/generation";
 

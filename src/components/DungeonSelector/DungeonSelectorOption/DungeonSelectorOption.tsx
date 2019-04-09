@@ -1,14 +1,15 @@
 import React from "react";
-import { Option, DungeonSelection } from "../DungeonSelector.types";
+import { Option } from "../DungeonSelector.types";
 import {
   StyledDungeonSelectorOption,
   Icon,
   Title
 } from "./DungeonSelectorOption.style";
+import { DungeonSelection } from "src/types";
 
 export interface DungeonSelectorOptionProps {
   option: Option;
-  onSelected: React.Dispatch<DungeonSelection>;
+  onSelected: (value: DungeonSelection) => void;
   isSelected?: boolean;
 }
 
@@ -17,7 +18,7 @@ export default function DungeonSelectorOption(
 ) {
   const { option, isSelected, onSelected } = props;
 
-  const handleChange = () => {
+  const handleClick = () => {
     if (!isSelected) {
       onSelected(option.type);
     }
@@ -30,7 +31,7 @@ export default function DungeonSelectorOption(
         type="radio"
         name="dungeon_selection"
         value={option.type}
-        onClick={handleChange}
+        onClick={handleClick}
       />
       <label htmlFor={option.key}>
         <Icon src={option.icon} alt={option.type} />

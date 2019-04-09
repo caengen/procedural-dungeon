@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import uuidv4 from "uuid/v4";
 import { List } from "./DungeonSelector.style";
 import { DungeonSelectorOption } from "./DungeonSelectorOption";
-import { DungeonSelection, Option } from "./DungeonSelector.types";
+import { Option } from "./DungeonSelector.types";
 import walkIcon from "src/assets/walk.svg";
 import randomIcon from "src/assets/random.svg";
+import { DungeonSelection } from "src/types";
 
 export interface DungeonSelectorProps {
   onSelected: (selected: DungeonSelection) => void;
@@ -26,13 +27,18 @@ const options: Option[] = [
 export default function DungeonSelector(props: DungeonSelectorProps) {
   const [selected, updateSelected] = useState<DungeonSelection>("RandomWalk");
 
+  const handleSelected = (selected: DungeonSelection) => {
+    updateSelected(selected);
+    props.onSelected(selected);
+  };
+
   return (
     <div>
       <List>
         {options.map(o => (
           <DungeonSelectorOption
             isSelected={selected === o.type}
-            onSelected={updateSelected}
+            onSelected={handleSelected}
             key={o.key}
             option={o}
           />
